@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나만의 추억앨범</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+        * {
+            font-family: "Noto Sans KR", sans-serif;
+        }
+
+        .mytitle {
+            height: 250px;
+            background-color: green;
+            color: white;
+
+            /*박스안에 있는 내용물 정렬하기 (4줄)*/
+
+            /*해당 요소를 Flexbox 컨테이너로 지정합니다.*/
+            display: flex;
+
+            /*Flexbox의 기본 방향을 세로로 설정합니다. 내부의 아이템 수직으로 배열됩니다.*/
+            flex-direction: column;
+
+            /*수평축에서 중앙으로 정렬합니다.(좌우에서 중앙)*/
+            align-items: center;
+
+            /*수직축에서 중앙으로 정렬합니다.(상하에서 중앙)*/
+            justify-content: center;
+
+            /*그림 삽입(3줄 기억하기)*/
+            background-image: url('https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-position: center;
+            background-size: cover;
+        }
+
+        .mytitle>button {
+            width: 150px;
+            height: 50px;
+
+            /*투명한 바탕*/
+            background-color: transparent;
+            color: white;
+
+            /*버튼 테두리에 1px만큼 흰색으로 채웁니다.*/
+            border: 1px solid white;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .mycard {
+            /*background-color: green;*/
+            width: 1220px;
+            margin: 30px auto 0px auto;
+        }
+
+        .mypostingbox {
+
+            width: 500px;
+            margin: 30px auto 0px auto;
+            padding: 20px;
+
+            /*그림자*/
+            /*box-shadow: 우측그림자크기 아래 전체연하게 전체진하게;*/
+            box-shadow: 0px 0px 3px 0px;
+            border-radius: 5px;
+
+        }
+
+        .mybtn {
+
+            /*중앙배열*/
+            display: flex;
+            flex-direction: row;
+            /*가로배열*/
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mybtn>button {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mytitle">
+        <h1>나만의 추억앨범</h1>
+        <button>추억 저장하기</button>
+    </div>
+
+    <div class="mypostingbox">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="앨범 이미지">
+            <label for="floatingInput">앨범 이미지</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="앨범 제목">
+            <label for="floatingInput">앨범 제목</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="앨범 내용">
+            <label for="floatingInput">앨범 내용</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="앨범 날짜">
+            <label for="floatingInput">앨범 날짜</label>
+        </div>
+        <div class="mybtn">
+            <button type="button" class="btn btn-dark">기록하기</button>
+            <button type="button" class="btn btn-outline-dark">닫기</button>
+
+        </div>
+    </div>
+
+    <div class="mycard">
+        <!--부트스트랩에서 가져온 카드 코드-->
+        <div class="card-group">
+            <div class="card">
+                <!--이미지 URL-->
+                <img src="https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">앨범 제목</h5>
+                    <p class="card-text">엘범 내용</p>
+                    <p class="card-text"><small class="text-body-secondary">앨범 날짜</small></p>
+                </div>
+            </div>
+            <div class="card">
+                <!--이미지 URL-->
+                <img src="https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">앨범 제목</h5>
+                    <p class="card-text">엘범 내용</p>
+                    <p class="card-text"><small class="text-body-secondary">앨범 날짜</small></p>
+                </div>
+            </div>
+            <div class="card">
+                <!--이미지 URL-->
+                <img src="https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">앨범 제목</h5>
+                    <p class="card-text">엘범 내용</p>
+                    <p class="card-text"><small class="text-body-secondary">앨범 날짜</small></p>
+                </div>
+            </div>
+            <div class="card">
+                <!--이미지 URL-->
+                <img src="https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">앨범 제목</h5>
+                    <p class="card-text">엘범 내용</p>
+                    <p class="card-text"><small class="text-body-secondary">앨범 날짜</small></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
