@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>자바스크립트 문법 연습하기!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<style>
+    body {
+        background-color: rgb(126, 155, 166)
+    }
+</style>
+<script>
+    let people = [
+        { 'name': '서영', 'age': 24 },
+        { 'name': '현아', 'age': 30 },
+        { 'name': '영환', 'age': 12 },
+        { 'name': '서연', 'age': 15 },
+        { 'name': '지용', 'age': 18 },
+        { 'name': '예지', 'age': 36 }
+    ];
+
+    function checkResult() {
+        $('#q1').empty();
+        $('#q2').empty();
+
+        people.forEach((person) => {
+            let temp_html_2 = `<p>${person.name}는 ${person.age}살</p>`;  // 각 사람의 정보를 표시하는 템플릿
+            $('#q2').append(temp_html_2);  // 각 사람에 대한 HTML 추가
+        });
+    };
+</script>
+
+<body>
+    <div class="top-part">
+        <h1>자바스크립트 문법 연습하기!</h1>
+    </div>
+    <hr />
+    <br>
+    <h2>1. 함수</h2>
+    <div class="button-part">
+        <button onclick="checkResult()">결과 확인하기!</button>
+    </div>
+    <div class="list-part">
+        <h2>2. 붙이기</h2>
+        <div id="q1">
+            <p>사과</p>
+            <p>귤</p>
+            <p>감</p>
+        </div>
+    </div>
+    <div class="list-part">
+        <h2>3. 붙이기</h2>
+        <div id="q2">
+            <p>영수는 24살입니다.</p>
+            <p>세종은 30살입니다.</p>
+            <p>수영은 20살입니다.</p>
+        </div>
+    </div>
+</body>
+
+</html>

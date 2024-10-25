@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스파르타 로그인</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+        * {
+            font-family: "Noto Sans KR", sans-serif;
+        }
+        .mytitle {
+            /*구역 범위 지정*/
+            width: 300px;
+            /*가로 길이*/
+            height: 200px;
+            /*세로 길이*/
+
+            /*배경색
+            background-color: green; 
+            */
+
+            /*여백 지정 - 내부는 padding, 외부는 margin*/
+            padding-top: 30px;
+
+            /*모서리*/
+            border-radius: 8px;
+
+            /*그림 삽입(3줄 기억하기)*/
+            background-image: url('https://www.ancient-origins.net/sites/default/files/field/image/Agesilaus-II-cover.jpg');
+            background-position: center;
+            background-size: cover;
+
+            /*글자*/
+            color: white;
+            /*글자 색*/
+            text-align: center;
+            /*글자 가운데 정렬*/
+        }
+
+        .wrap {
+            /* background-color: green;*/
+            width: 300px;
+
+            /*margin: 위쪽마진 왼쪽마진 아래쪽마진 오른쪽마진; */
+            margin: 50px auto 0px auto;
+            /*auto : 끝까지 다 민다*/
+
+        }
+    </style>
+</head>
+
+<body>
+    <!--구역은 <div>를 사용합니다.-->
+    <div class="wrap">
+        <div class="mytitle">
+            <h1>로그인 페이지</h1>
+            <h5>아이디, 비밀번호를 입력해주세요</h5>
+        </div>
+
+        <p>ID : <input type="text" /></p> <!--텍스트 입력박스-->
+        <p>PW : <input type="text" /></p>
+        <button>로그인하기</button>
+    </div>
+</body>
+
+</html>
