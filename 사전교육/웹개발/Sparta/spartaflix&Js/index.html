@@ -63,11 +63,40 @@
         }
     </style>
     <script>
-        function hey() {
-            $('#title').text('쥬라기월드');
-            // title의 텍스트를 '쥬라기월드'로 바꿔라
-            // $('#아이디명') : id = '아이디명'가 있는 부분을 가리킵니다.
-            
+        $(document).ready(function () { // 페이지 로딩되면 자동으로 Fetch를 합니다.
+            let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
+            fetch(url).then(res => res.json()).then(data => {
+                let tem = data['temp'];
+                $('#tem').text(tem)
+            })
+        })
+        function openclose() {
+            $('#postingbox').toggle();
+
+        }
+
+
+        function makeCard() {
+            // 특정한 곳에 있는 벨류값 가져오기
+            let image = $('#image').val();
+            let title = $('#title').val();
+            let star_score = $('#star_score').val();
+            let content = $('#content').val();
+
+            let new_card = `
+            <div class="col">
+                <div class="card h-100">
+                    <img src="${image}"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text">${star_score}</p>
+                        <p class="card-text">${content}</p>
+                    </div>
+                </div>
+            </div>`;
+
+            $('#card').append(new_card);
         }
     </script>
 </head>
@@ -97,6 +126,11 @@
                             style="user-select: auto !important;">영화</a></li>
                     <li style="user-select: auto !important;"><a href="#" class="nav-link px-2 text-white"
                             style="user-select: auto !important;">내가 찜한 콘텐츠</a></li>
+                    <li style="user-select: auto !important;"><a href="#" class="nav-link px-2 text-white"
+                            style="user-select: auto !important;">
+                            <P>현재 서울 기온 : <span id="tem"></span></p>
+                        </a></li>
+
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"
@@ -117,50 +151,49 @@
     <div class="main">
         <div class="p-5 mb-4 bg-body-tertiary rounded-3" style="user-select: auto !important;">
             <div class="container-fluid py-5" style="user-select: auto !important;">
-                <h1 id="title">킹덤</h1>
+                <h1 class="display-5 fw-bold">킹덤</h1>
                 <p>병든 왕을 둘러싸고 흉흉한 소문이 떠돈다. 어둠에 뒤덮인 조선, 기이한 역병에 신음하는 산하. 정체모를 악에 맞서 백성을 구원할 희망은 오직 세자뿐이다.</p>
-                <button onclick='hey()' type="button" class="btn btn-outline-light">영화기록하기</button>
+                <button onclick='openclose()' type="button" class="btn btn-outline-light">영화기록하기</button>
                 <button type="button" class="btn btn-outline-light">상세정보</button>
             </div>
         </div>
     </div>
 
-    <div class="mypostingbox">
-
+    <div id="postingbox" class="mypostingbox">
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="영화 이미지 주소">
-            <label for="floatingInput">영화 이미지 주소</label>
+            <input type="email" class="form-control" id="image" placeholder="영화 이미지 주소">
+            <label for="image">영화 이미지 주소</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="영화 제목">
-            <label for="floatingInput">영화 제목</label>
+            <input type="email" class="form-control" id="title" placeholder="영화 제목">
+            <label for="title">영화 제목</label>
         </div>
         <!--별점 선텍 (Custom Select)-->
         <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">별점</label>
-            <select class="form-select" id="inputGroupSelect01">
+            <label class="input-group-text" for="star_score">별점</label>
+            <select class="form-select" id="star_score">
                 <option selected>별점 선택</option>
-                <option value="1">⭐</option>
-                <option value="2">⭐⭐</option>
-                <option value="3">⭐⭐⭐</option>
-                <option value="4">⭐⭐⭐⭐</option>
-                <option value="5">⭐⭐⭐⭐⭐</option>
+                <option value="⭐">⭐</option>
+                <option value="⭐⭐">⭐⭐</option>
+                <option value="⭐⭐⭐">⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
             </select>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="추천 이유">
-            <label for="floatingInput">추천 이유</label>
+            <input type="email" class="form-control" id="content" placeholder="추천 이유">
+            <label for="content">content</label>
         </div>
-        <button type="button" class="btn btn-dark">기록하기</button>
+        <button onclick="makeCard()" type="button" class="btn btn-dark">기록하기</button>
     </div>
 
 
 
     <div class="mycard">
         <!--<div class="row row-cols-1 row-cols-md-3 g-4">   md3은 3개 카드가 한줄로 나옴-->
-        <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
             <div class="col">
                 <div class="card h-100">
                     <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
