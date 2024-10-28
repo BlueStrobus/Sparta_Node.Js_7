@@ -87,6 +87,14 @@
         }
     </style>
     <script>
+        $(document).ready(function () { // 페이지 로딩되면 자동으로 Fetch를 합니다.
+            let url = "http://spartacodingclub.shop/sparta_api/seoulair";
+            fetch(url).then(res => res.json()).then(data => {
+                let mise = data['RealtimeCityAir']['row'][0]['IDEX_NM']
+                $('#msg').text(mise)
+            })
+        })
+
         // Post Box 버튼으로 여닫기
         function openclose() {
             $('#postingbox').toggle();
@@ -120,6 +128,7 @@
 <body>
     <div class="mytitle">
         <h1>나만의 추억앨범</h1>
+        <p>현재 서울의 미세먼지 : <span id="msg">날씨</span></p>
         <button onclick="openclose()">추억 저장하기</button>
     </div>
 
