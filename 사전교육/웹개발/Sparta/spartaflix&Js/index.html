@@ -62,42 +62,91 @@
             padding: 20px;
         }
     </style>
-    <script>
-        $(document).ready(function () { // 페이지 로딩되면 자동으로 Fetch를 합니다.
-            let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
-            fetch(url).then(res => res.json()).then(data => {
-                let tem = data['temp'];
-                $('#tem').text(tem)
-            })
+
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // Firebase 구성 정보 설정 -> 프로젝트 설정의 SDK 설정 및 구성 가져오기
+        /*const firebaseConfig = {
+            // 본인 설정 내용 채우기 
+        }; */
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyARvXqt1jk70WhUPCZ1yCDxqK4V0gsZ-uc",
+            authDomain: "sqarta-5fffb.firebaseapp.com",
+            projectId: "sqarta-5fffb",
+            storageBucket: "sqarta-5fffb.appspot.com",
+            messagingSenderId: "786388961610",
+            appId: "1:786388961610:web:36b035fbf79f0391c759b3",
+            measurementId: "G-X895B7R0TW"
+        };
+
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+
+        // 기온 가져오기
+        let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
+        fetch(url).then(res => res.json()).then(data => {
+            let tem = data['temp'];
+            $('#tem').text(tem)
         })
-        function openclose() {
+
+        // 데이터 불러오기
+        let docs = await getDocs(collection(db, "spataflix"));
+        docs.forEach((doc) => {
+
+            console.log("데이터 불러오기");
+            let row = doc.data();
+            // 특정한 곳에 있는 벨류값 가져오기
+            let image = row['image']; // let 변수명 = row['#키이름']; 키값을 변수에 넣음
+            let title = row['title'];
+            let star_score = row['dstar_score'];
+            let coment = row['coment'];
+
+            let temp_html = `
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="${image}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">${title}</h5>
+                        <p class="card-text">${star_score}</p>
+                            <p class="card-text">${coment}</p>
+                        </div>
+                    </div>
+                </div>`;
+
+            $('#poster_card').append(temp_html);
+            console.log("데이터 불러오기");
+        })
+        $("#openclose_btn").click(async function () {
             $('#postingbox').toggle();
-
-        }
-
-
-        function makeCard() {
+        })
+        $("#posting_btn").click(async function () {
             // 특정한 곳에 있는 벨류값 가져오기
             let image = $('#image').val();
             let title = $('#title').val();
             let star_score = $('#star_score').val();
-            let content = $('#content').val();
+            let coment = $('#coment').val();
 
-            let new_card = `
-            <div class="col">
-                <div class="card h-100">
-                    <img src="${image}"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${title}</h5>
-                        <p class="card-text">${star_score}</p>
-                        <p class="card-text">${content}</p>
-                    </div>
-                </div>
-            </div>`;
+            let doc = {
+                'image': image,
+                'title': title,
+                'star_score': star_score,
+                'coment': coment,
+            };
+            await addDoc(collection(db, "spataflix"), doc);
+            // alert('저장 완료')
+            window.location.reload(); // 새로고침        
+        })
 
-            $('#card').append(new_card);
-        }
     </script>
 </head>
 
@@ -153,7 +202,7 @@
             <div class="container-fluid py-5" style="user-select: auto !important;">
                 <h1 class="display-5 fw-bold">킹덤</h1>
                 <p>병든 왕을 둘러싸고 흉흉한 소문이 떠돈다. 어둠에 뒤덮인 조선, 기이한 역병에 신음하는 산하. 정체모를 악에 맞서 백성을 구원할 희망은 오직 세자뿐이다.</p>
-                <button onclick='openclose()' type="button" class="btn btn-outline-light">영화기록하기</button>
+                <button id='openclose_btn' type="button" class="btn btn-outline-light">영화기록하기</button>
                 <button type="button" class="btn btn-outline-light">상세정보</button>
             </div>
         </div>
@@ -183,17 +232,17 @@
         </div>
 
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="content" placeholder="추천 이유">
-            <label for="content">content</label>
+            <input type="email" class="form-control" id="coment" placeholder="추천 이유">
+            <label for="coment">코맨트</label>
         </div>
-        <button onclick="makeCard()" type="button" class="btn btn-dark">기록하기</button>
+        <button id="posting_btn" type="button" class="btn btn-dark">기록하기</button>
     </div>
 
 
 
     <div class="mycard">
         <!--<div class="row row-cols-1 row-cols-md-3 g-4">   md3은 3개 카드가 한줄로 나옴-->
-        <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
+        <div id="poster_card" class="row row-cols-1 row-cols-md-4 g-4">
             <div class="col">
                 <div class="card h-100">
                     <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
