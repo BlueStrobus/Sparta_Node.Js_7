@@ -86,42 +86,108 @@
             margin-right: 5px;
         }
     </style>
-    <script>
-        $(document).ready(function () { // 페이지 로딩되면 자동으로 Fetch를 합니다.
-            let url = "http://spartacodingclub.shop/sparta_api/seoulair";
-            fetch(url).then(res => res.json()).then(data => {
-                let mise = data['RealtimeCityAir']['row'][0]['IDEX_NM']
-                $('#msg').text(mise)
-            })
-        })
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-        // Post Box 버튼으로 여닫기
-        function openclose() {
-            $('#postingbox').toggle();
-        }
 
-        function makeCard() {
-            // 특정한 곳에 있는 벨류값 가져오기
+        // Firebase 구성 정보 설정 -> 프로젝트 설정의 SDK 설정 및 구성 가져오기
+        /*const firebaseConfig = {
+            // 본인 설정 내용 채우기 
+        }; */
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyARvXqt1jk70WhUPCZ1yCDxqK4V0gsZ-uc",
+            authDomain: "sqarta-5fffb.firebaseapp.com",
+            projectId: "sqarta-5fffb",
+            storageBucket: "sqarta-5fffb.appspot.com",
+            messagingSenderId: "786388961610",
+            appId: "1:786388961610:web:36b035fbf79f0391c759b3",
+            measurementId: "G-X895B7R0TW"
+        };
+
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+
+
+        // 어떤 'id'값에 click을 담은 것
+        // 모듈을 쓰면 'onclick'이 잘 안되서 아래를 사용합니다.
+        //         $("#id").click(async function () {
+        //     let doc = {}; // doc는 담을 것
+        //     await addDoc(collection(db, "콜렉션이름"), doc);  // 이 줄이 핵심
+        // })
+
+        $("#posting_btn").click(async function () {
             let image = $('#image').val();
             let title = $('#title').val();
-            let content = $('#content').val();
+            let coment = $('#coment').val();
             let date = $('#date').val();
+
+            let doc = {
+                'image': image,
+                'title': title,
+                'coment': coment,
+                'date': date
+            };
+            await addDoc(collection(db, "albums"), doc);
+            alert('저장 완료')
+            window.location.reload(); // 새로고침        
+        })
+
+        $("#openclos_btn").click(async function () {
+            $('#postingbox').toggle();
+        })
+        $("#clos_btn").click(async function () {
+            $('#postingbox').toggle();
+        })
+
+
+
+
+
+        // 스크립트 타입을 모듈(파이어베이스 사옹 시 필요)이라고 적으면 이 스크립트가 가장 나중에 호줄됨
+        // $(document).ready(function () {}) 필요 없음
+        let url = "http://spartacodingclub.shop/sparta_api/seoulair";
+        fetch(url).then(res => res.json()).then(data => {
+            let mise = data['RealtimeCityAir']['row'][0]['IDEX_NM']
+            $('#msg').text(mise)
+        })
+
+        // 데이터 불러오기
+        let docs = await getDocs(collection(db, "albums"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+
+            // 특정한 곳에 있는 벨류값 가져오기
+            let image = row['image']; // let 변수명 = row['#키이름']; 키값을 변수에 넣음
+            let title = row['title'];
+            let coment = row['coment'];
+            let date = row['date'];
 
             // 뭔가를 만들어서 붙이는 <p>키 기능
             // let temp_html = `<p>카드 하나 <div> </p>`;
-            let new_card = `
+            let temp_html = `
             <div class="card">
                 <img src="${image}"
                     class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${content}</p>
+                    <p class="card-text">${coment}</p>
                     <p class="card-text"><small class="text-body-secondary">${date}</small></p>
                 </div>
             </div>`;
 
-            $('#card').append(new_card);
-        }
+            $('#card').append(temp_html);
+        });
+
+
+
     </script>
 </head>
 
@@ -129,7 +195,7 @@
     <div class="mytitle">
         <h1>나만의 추억앨범</h1>
         <p>현재 서울의 미세먼지 : <span id="msg">날씨</span></p>
-        <button onclick="openclose()">추억 저장하기</button>
+        <button id="openclos_btn">추억 저장하기</button>
     </div>
 
     <div class="mypostingbox" id="postingbox">
@@ -143,7 +209,7 @@
             <label for="floatingInput">앨범 제목</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="content" placeholder="앨범 내용">
+            <input type="email" class="form-control" id="coment" placeholder="앨범 내용">
             <label for="floatingInput">앨범 내용</label>
         </div>
         <div class="form-floating mb-3">
@@ -151,8 +217,9 @@
             <label for="floatingInput">앨범 날짜</label>
         </div>
         <div class="mybtn">
-            <button onclick="makeCard()" type="button" class="btn btn-dark">기록하기</button>
-            <button type="button" class="btn btn-outline-dark">닫기</button>
+            <!-- onclick 대신 id 지정 -->
+            <button id='posting_btn' type="button" class="btn btn-dark">기록하기</button>
+            <button id='clos_btn' type="button" class="btn btn-outline-dark">닫기</button>
         </div>
     </div>
 
@@ -161,8 +228,8 @@
         <!-- <div class="card-group"> -->
         <!-- id 지정, 큰 화면에서 한 줄에 4개씩 배치 -->
         <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
+            <!-- 
             <div class="card">
-                <!--이미지 URL-->
                 <img src="https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
                     class="card-img-top" alt="...">
                 <div class="card-body">
@@ -171,36 +238,8 @@
                     <p class="card-text"><small class="text-body-secondary">앨범 날짜</small></p>
                 </div>
             </div>
-            <div class="card">
-                <!--이미지 URL-->
-                <img src="https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">앨범 제목</h5>
-                    <p class="card-text">엘범 내용</p>
-                    <p class="card-text"><small class="text-body-secondary">앨범 날짜</small></p>
-                </div>
-            </div>
-            <div class="card">
-                <!--이미지 URL-->
-                <img src="https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">앨범 제목</h5>
-                    <p class="card-text">엘범 내용</p>
-                    <p class="card-text"><small class="text-body-secondary">앨범 날짜</small></p>
-                </div>
-            </div>
-            <div class="card">
-                <!--이미지 URL-->
-                <img src="https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">앨범 제목</h5>
-                    <p class="card-text">엘범 내용</p>
-                    <p class="card-text"><small class="text-body-secondary">앨범 날짜</small></p>
-                </div>
-            </div>
+            -->
+        
         </div>
 
     </div>
