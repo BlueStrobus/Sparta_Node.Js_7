@@ -58,48 +58,21 @@ router.get('/goods/:goodsId', (req, res) => {
   return res.status(200).json({goods: findGoods}); // 3.
 })
 
-/** 상품 등록 **/
+/** 상품 등록 리팩토링 **/
 // localhost:3000/api/goods POST
 router.post('/goods', (req, res) => {
-  const name = req.body.name;
-  const thumbnailUrl = req.body.thumbnailUrl;
-  const category = req.body.category;
-  const price = req.body.price;
+  // 객체 구조 분해 할당 적용하기.
+  const { name, thumbnailUrl, category, price } = req.body;
 
   const goodsId = goods[goods.length - 1].goodsId + 1; // 현재 goodsId의 가장 큰 값 + 1
 
+  // 객체 구조 분해 할당 적용하기.
   const goodsItem = {
-    goodsId: goodsId,
-    name: name,
-    thumbnailUrl: thumbnailUrl,
-    category: category,
-    price: price,
-  };
-  goods.push(goodsItem);
-
-  return res.status(201).json({ goods: goodsItem });
-});
-
-/**상품 등록 API **/
-// http://localhost:3000/api/goods/
-router.post('/goods', (req, res) => {
-  // 1. name, thumbnailUrl, category, price를 req.body로 전달받는다.
-  // 2. 해당하는 데이터를바탕으로 상품을 등록한다.
-  // 3. 등록된 상품 데이터를 클라이언트에게 반환한다.
-
-  const name = req.body.name;
-  const thumbnailUrl = req.body.thumbnailUrl;
-  const category = req.body.category;
-  const price = req.body.price;
-
-  const goodsId = goods[goods.length - 1].goodsId + 1; // 현재 goodsId의 가장 큰 값 + 1
-
-  const goodsItem = {
-    goodsId: goodsId,
-    name: name,
-    thumbnailUrl: thumbnailUrl,
-    category: category,
-    price: price,
+    goodsId,
+    name,
+    thumbnailUrl,
+    category,
+    price,
   };
   goods.push(goodsItem);
 
