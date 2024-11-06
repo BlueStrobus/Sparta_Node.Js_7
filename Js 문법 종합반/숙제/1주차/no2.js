@@ -5,7 +5,9 @@
 */
 
 function solution(absolutes, signs) {
+    
     var answer = 0;
+    // (signs[i]) ? answer += absolutes[i] : answer -= absolutes[i]
     for (let i = 0; i < signs.length; i++) {
         if (signs[i]) {  // 양수(true)면 참
             answer += absolutes[i];
