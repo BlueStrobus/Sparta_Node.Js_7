@@ -1,0 +1,152 @@
+html {
+  font-family: sans-serif;
+}
+
+body {
+  background-color: #e2e8f0;
+  width: 50%;
+  max-width: 750px;
+  min-width: 480px;
+  margin: auto;
+}
+
+#container {
+  width: 750px;
+  height: 900px;
+  background-color: white;
+}
+
+.lastResult {
+  color: black;
+  padding: 7px;
+}
+
+.guesses {
+  color: black;
+  padding: 7px;
+}
+
+form {
+  display: flex;
+  margin: 10px 0;
+}
+
+#submitButton {
+  width: 110px;
+  height: 56px;
+  color: #fff;
+  background-color: #f6ad55;
+  color: white;
+  border-radius: 15px;
+  font-size: 30px;
+  border-style: none;
+  margin-left: 10px;
+}
+
+#submitButton:hover {
+  background-color: #e3e3e3;
+}
+
+#submitButton:disabled {
+  background-color: #e2e8f0;
+}
+
+#guessField {
+  color: #000;
+  width: 250px;
+  height: 50px;
+  font-size: 30px;
+  border-style: none;
+  font-size: 45px;
+  border: 3px solid black;
+  text-align: center;
+}
+
+#guessField:disabled {
+  background-color: #e2e8f0;
+  border-color: #c1c0c0;
+}
+
+#guess {
+  font-size: 30px;
+  color: black;
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  text-align: center;
+  width: 750px;
+  height: 750px;
+  background-color: white;
+  color: #fff;
+  font-size: 25px;
+  background-color: white;
+}
+
+h1 {
+  width: 750px;
+  background-color: #f6ad55;
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+}
+
+#explanation {
+  width: 750px;
+  background: white;
+}
+
+p {
+  color: black;
+  font-size: 20px;
+  text-align: center;
+}
+
+#newGame {
+  cursor: pointer;
+  font-size: 30px;
+  text-align: center;
+}
+
+#newGame:hover {
+  background-color: #e3e3e3;
+}
+
+.circleArea {
+  width: 750px;
+  height: 300px;
+  margin-top: 20px;
+  display: flex;
+}
+
+.answerCircleArea {
+  width: 375px;
+  display: flex;
+  justify-content: center;
+}
+
+.guessCircleArea {
+  width: 375px;
+  display: flex;
+  justify-content: center;
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+#answerCircle {
+  background-color: black;
+}
+
+#guessCircle {
+  background-color: red;
+}

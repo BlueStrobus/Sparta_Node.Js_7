@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Number Guessing Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="container">
+    <h1>숫자 맞추기 게임</h1>
+    <p>20이상 120이하의 랜덤한 숫자를 맞춰보세요.</p>
+    <p>기회는 10번 입니다.</p>
+    <br />
+    <div id="wrapper">
+      <form class="form">
+        <input type="text" id="guessField" class="guessField" />
+        <button type="submit" id="submitButton" class="guessSubmit">
+          확인
+        </button>
+      </form>
+      <div class="resultParas">
+        <p>예측한 숫자들: <span class="guesses"></span></p>
+        <p>남은 기회: <span class="lastResult">10</span></p>
+        <p class="guessingResult"></p>
+      </div>
+      <div class="circleArea">
+        <div class="answerCircleArea"></div> <!--div.id = "answerCircle";-->
+        <div class="guessCircleArea"></div> <!--div.id = "guessCircle";-->
+      </div>
+    </div>
+  </div>
+  <script src="app2.js"></script>
+</body>
+
+</html>
