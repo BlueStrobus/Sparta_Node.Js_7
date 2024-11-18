@@ -214,6 +214,8 @@ const MeetHuman = async (player, logs, stage, dLog) => {
 
           case '3':
             //  console.log('3번 선택');
+
+            console.log('사망하셨습니다. 게임이 종료 됩니다.');
             process.exit();
             return;
         }
@@ -281,6 +283,7 @@ const MeetHuman = async (player, logs, stage, dLog) => {
           return;
 
         case '3':
+          console.log('사망하셨습니다. 게임이 종료 됩니다.');
           process.exit();
           //console.log('3번 선택');
           return;
@@ -368,6 +371,7 @@ const MeetWolverene = async (player, logs, stage, dLog) => {
           return;
 
         case '3':
+          console.log('사망하셨습니다. 게임이 종료 됩니다.');
           process.exit();
           //console.log('3번 선택');
           return;
@@ -459,6 +463,7 @@ const MeetRaven = async (player, logs, stage, dLog) => {
           return;
 
         case '3':
+          console.log('사망하셨습니다. 게임이 종료 됩니다.');
           process.exit();
           //console.log('3번 선택');
           return;
@@ -548,6 +553,7 @@ const MeetOtter = async (player, logs, stage, dLog) => {
           return;
 
         case '3':
+          console.log('사망하셨습니다. 게임이 종료 됩니다.');
           process.exit();
           //console.log('3번 선택');
           return;
