@@ -92,7 +92,7 @@ const battle = async (stage, player, dLog) => {
     //Enter 입력
     //랜덤을 돌린다(0 ~ 10)
     // //
-    const rand = 0; // getRandomInt(4);
+    const rand = getRandomInt(4);
     // console.log(rand);
 
     //동물 3, 사람1,
